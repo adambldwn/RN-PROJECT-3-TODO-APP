@@ -21,7 +21,29 @@ const Main = () => {
 
   }
 
-  const renderTodo = ({item}) => <TodoCard data={item}/>
+  function doneTodo(todoId){
+    const newArray = [...list];
+    const todoIndex = newArray.findIndex(item => item.id == todoId);
+
+    newArray[todoIndex].isDone = !newArray[todoIndex].isDone;
+
+    setList(newArray);
+  }
+
+  function removeTodo(todoId){
+    const newArray = [...list];
+    const todoIndex = newArray.findIndex(t => t.id == todoId)
+
+    newArray.splice(todoIndex, 1);
+
+    setList(newArray);
+  }
+
+  const renderTodo = ({item}) => <TodoCard
+                                    data={item}
+                                    onDone={id => doneTodo(id)}
+                                    onRemove={()=> removeTodo(item.id)}
+                                  />
 
   return(
     <SafeAreaView style={main.container}>
@@ -29,7 +51,7 @@ const Main = () => {
         
         <View style={main.banner}>
           <Text style={main.todoText}>TODO</Text>
-          <Text style={main.todoCount}>{list.length}</Text>
+          <Text style={main.todoCount}>{list.filter(t => t.isDone === false).length}</Text>
         </View>
 
         <FlatList
