@@ -13,6 +13,8 @@ TextInput
 TouchableOpacity
 
 splice()
+
 indexOf()
+
 findIndex()
 
